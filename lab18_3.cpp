@@ -8,9 +8,11 @@
 using namespace std;
 
 struct student{
-
     //Define struct student with four member (name ,id , gender, gpa);
-    
+	string name;
+	int id;
+	char gender;
+	double gpa;
 };
 
 struct course{
@@ -20,7 +22,7 @@ struct course{
 	vector<student *> student_list;
 };
 
-student * findstudent(vector<student> allstudents,int key){ //There is something wrong in this line.
+student * findstudent(vector<student> &allstudents,int key){ //There is something wrong in this line.
 	for(unsigned int i = 0; i < allstudents.size(); i++){
 		if(allstudents[i].id  == key) return &allstudents[i];
 	}
@@ -65,6 +67,9 @@ int main(){
 		student s; 
 		
 		//Use sscanf() to split the values in textline and assign those values to the members of struct s;
+		char name[100];
+		sscanf(textline.c_str(), "%99[^,], %d, %c, %lf", name, &s.id, &s.gender, &s.gpa);
+		s.name = string(name);
 
 		allstudents.push_back(s); 		
 	}
@@ -85,6 +90,7 @@ int main(){
 			}else{
 			
 			    //Append (push_back) textline to lecture_list[] of the recently added course in allcourses[];
+				allcourses.back().lecture_list.push_back(textline);
 			    
 			}			
 		}else{
@@ -94,6 +100,7 @@ int main(){
 				student *p = findstudent(allstudents,atof(textline.c_str()));
 				
 				//Append (push_back) p to student_list of the recently added course in allcourses[];
+				allcourses.back().student_list.push_back(p);
 				
 			}
 		}
